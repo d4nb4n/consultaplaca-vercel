@@ -1,7 +1,7 @@
-import fetch from "node-fetch";
-import * as cheerio from "cheerio";
+const fetch = require("node-fetch");
+const cheerio = require("cheerio");
 
-export default async function handler(req, res) {
+const handler = async (req, res) => {
   const { id } = req.query;
   const url = `https://puxaplaca.com.br/placa/${id}`;
 
@@ -48,4 +48,6 @@ export default async function handler(req, res) {
   } catch (err) {
     res.status(500).json({ erro: "Falha ao consultar placa" });
   }
-}
+};
+
+module.exports = handler;
