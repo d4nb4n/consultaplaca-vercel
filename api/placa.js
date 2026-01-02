@@ -6,8 +6,15 @@ export default async function handler(req, res) {
   const url = `https://puxaplaca.com.br/placa/${id}`;
 
   try {
-    const response = await fetch(url);
+    const response = await fetch(url, {
+      headers: { "User-Agent": "Mozilla/5.0" } // ajuda a evitar bloqueio
+    });
     const html = await response.text();
+
+    // 🔎 Loga o HTML recebido nos Runtime Logs do Vercel
+    console.log("HTML recebido:", html.substring(0, 500)); 
+    // mostra só os primeiros 500 caracteres para não lotar os logs
+
     const $ = cheerio.load(html);
 
     const dados = {
@@ -46,6 +53,7 @@ export default async function handler(req, res) {
 
     res.status(200).json(dados);
   } catch (err) {
+    console.error("Erro ao consultar:", err);
     res.status(500).json({ erro: "Falha ao consultar placa" });
   }
 }
