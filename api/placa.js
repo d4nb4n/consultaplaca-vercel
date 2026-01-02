@@ -1,7 +1,7 @@
 const fetch = require("node-fetch");
 const cheerio = require("cheerio");
 
-const handler = async (req, res) => {
+module.exports = async (req, res) => {
   const { id } = req.query;
   const url = `https://puxaplaca.com.br/placa/${id}`;
 
@@ -49,5 +49,3 @@ const handler = async (req, res) => {
     res.status(500).json({ erro: "Falha ao consultar placa" });
   }
 };
-
-module.exports = handler;
